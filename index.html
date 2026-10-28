@@ -1,0 +1,409 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>body{margin:0}[hidden]{display:none!important}*{box-sizing:border-box}</style>
+<title>Der Die Das Trainer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+<style>
+/* Layout: one narrow study column; tabs on top; gender colours der/die/das follow the classic textbook blue/red/green */
+:root{
+  --bg:#f6f7f9; --surface:#ffffff; --ink:#1b1f2a; --muted:#5d6577; --line:#dfe3ea;
+  --accent:#2b3a67;
+  --der:#2563c9; --die:#d23b3b; --das:#1f9a57; --pl:#8a5cc2;
+  --nom:#2b3a67; --akk:#d23b3b; --dat:#1f9a57; --gen:#c98a12;
+  --ok:#1f9a57; --bad:#d23b3b;
+  --display:"Bricolage Grotesque",ui-sans-serif,system-ui,sans-serif;
+  --body:"Atkinson Hyperlegible",ui-sans-serif,system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#12151c; --surface:#1b2029; --ink:#e9ecf2; --muted:#9aa3b5; --line:#2c3340; --accent:#a9b8ec;
+  --der:#6aa1ff; --die:#ff7a7a; --das:#4fd18c; --pl:#bb93ee; --nom:#a9b8ec; --akk:#ff7a7a; --dat:#4fd18c; --gen:#f2b84b;
+  --ok:#4fd18c; --bad:#ff7a7a; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12151c; --surface:#1b2029; --ink:#e9ecf2; --muted:#9aa3b5; --line:#2c3340; --accent:#a9b8ec;
+  --der:#6aa1ff; --die:#ff7a7a; --das:#4fd18c; --pl:#bb93ee; --nom:#a9b8ec; --akk:#ff7a7a; --dat:#4fd18c; --gen:#f2b84b;
+  --ok:#4fd18c; --bad:#ff7a7a; color-scheme:dark}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.5}
+.wrap{max-width:760px;margin:0 auto;padding-block:20px 60px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header h1{font-family:var(--display);font-weight:800;font-size:clamp(2rem,6vw,3rem);line-height:1;margin:0;letter-spacing:-.02em}
+header h1 .d1{color:var(--der)} header h1 .d2{color:var(--die)} header h1 .d3{color:var(--das)}
+header p{color:var(--muted);margin:.5rem 0 0;max-width:60ch}
+nav{display:flex;flex-wrap:wrap;gap:6px;margin:20px 0 22px}
+nav a{font-weight:700;text-decoration:none;color:var(--muted);padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:var(--surface);font-size:.92rem}
+nav a[aria-current="page"]{background:var(--accent);color:var(--bg);border-color:var(--accent)}
+nav a:focus-visible,button:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+h2{font-family:var(--display);font-weight:800;font-size:1.5rem;margin:0 0 .4rem;text-wrap:balance}
+h3{font-family:var(--display);font-weight:600;font-size:1.1rem;margin:1.6rem 0 .5rem}
+.lead{color:var(--muted);margin:0 0 1rem}
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:520px;font-variant-numeric:tabular-nums}
+th,td{padding:9px 12px;text-align:left;border-bottom:1px solid var(--line)}
+tr:last-child td{border-bottom:0}
+th{font-size:.75rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+td.case{font-weight:700}
+.m{color:var(--der);font-weight:700}.f{color:var(--die);font-weight:700}.n{color:var(--das);font-weight:700}.p{color:var(--pl);font-weight:700}
+.chg{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:3px}
+.tag{display:inline-block;font-size:.72rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:2px 8px;border-radius:999px;color:var(--bg)}
+.t-N{background:var(--nom)}.t-A{background:var(--akk)}.t-D{background:var(--dat)}.t-G{background:var(--gen)}.t-W{background:var(--muted)}
+.preps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.pbox{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px}
+.pbox h4{margin:0 0 6px;font-family:var(--display);font-size:1rem}
+.pbox p{margin:0;font-size:.95rem}
+.pbox small{color:var(--muted);display:block;margin-top:6px}
+.tip{border-left:4px solid var(--accent);padding:8px 14px;background:var(--surface);border-radius:0 8px 8px 0;margin:12px 0}
+/* trainer */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px}
+.meta{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;color:var(--muted);font-size:.9rem;margin-bottom:12px}
+.q{font-family:var(--display);font-weight:600;font-size:clamp(1.4rem,4.5vw,2rem);line-height:1.25;margin:6px 0 18px;text-wrap:balance}
+.gap{display:inline-block;min-width:3.2em;border-bottom:3px solid var(--muted);text-align:center}
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(90px,1fr));gap:8px}
+.opts button{font:700 1.05rem var(--body);padding:12px 8px;border-radius:10px;border:2px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer}
+.opts button:hover:not(:disabled){border-color:var(--accent)}
+.opts button.right{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 16%,var(--bg))}
+.opts button.wrong{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 16%,var(--bg))}
+.opts button:disabled{cursor:default}
+.g-der{color:var(--der)}.g-die{color:var(--die)}.g-das{color:var(--das)}
+.fb{min-height:3.2em;margin-top:14px}
+.fb strong.ok{color:var(--ok)}.fb strong.no{color:var(--bad)}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;align-items:center}
+.btn{font:700 .95rem var(--body);padding:10px 18px;border-radius:999px;border:0;background:var(--accent);color:var(--bg);cursor:pointer}
+.btn.ghost{background:transparent;color:var(--muted);border:1px solid var(--line)}
+.filters{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.filters button{font:700 .85rem var(--body);padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--muted);cursor:pointer}
+.filters button[aria-pressed="true"]{border-color:var(--accent);color:var(--ink);box-shadow:inset 0 0 0 1px var(--accent)}
+/* stats */
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:18px}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px}
+.kpi b{display:block;font-family:var(--display);font-size:1.8rem;font-variant-numeric:tabular-nums}
+.kpi span{color:var(--muted);font-size:.8rem;text-transform:uppercase;letter-spacing:.05em}
+.bars{display:grid;gap:10px}
+.bar{display:grid;grid-template-columns:110px 1fr 92px;gap:10px;align-items:center;font-variant-numeric:tabular-nums}
+.bar .track{height:14px;background:var(--line);border-radius:7px;overflow:hidden}
+.bar .fill{height:100%;border-radius:7px}
+.bar .v{text-align:right;color:var(--muted);font-size:.9rem}
+@media (max-width:480px){.bar{grid-template-columns:80px 1fr 70px}.kpi b{font-size:1.4rem}}
+footer{margin-top:40px;color:var(--muted);font-size:.85rem}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style></head><body>
+
+<div class="wrap">
+<header>
+  <h1><span class="d1">der</span> <span class="d2">die</span> <span class="d3">das</span> Trainer</h1>
+  <p>Die vier Fälle, Artikel und Präpositionen. Lernen, üben, Fortschritt sehen.</p>
+</header>
+<nav id="nav">
+  <a href="#lernen">Lernen</a>
+  <a href="#genus">der/die/das</a>
+  <a href="#faelle">Fälle-Quiz</a>
+  <a href="#praep">Präpositionen</a>
+  <a href="#statistik">Statistik</a>
+</nav>
+
+<!-- LEARN -->
+<section id="v-lernen" hidden>
+  <h2>Die 4 Fälle auf einen Blick</h2>
+  <p class="lead">Unterstrichen = die Form ändert sich gegenüber dem Nominativ.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Fall</th><th>Frage</th><th class="m">maskulin</th><th class="f">feminin</th><th class="n">neutral</th><th class="p">Plural</th></tr></thead>
+    <tbody>
+      <tr><td class="case"><span class="tag t-N">Nom</span></td><td>Wer? Was?</td><td class="m">der / ein</td><td class="f">die / eine</td><td class="n">das / ein</td><td class="p">die / –</td></tr>
+      <tr><td class="case"><span class="tag t-A">Akk</span></td><td>Wen? Was?</td><td class="m chg">den / einen</td><td class="f">die / eine</td><td class="n">das / ein</td><td class="p">die / –</td></tr>
+      <tr><td class="case"><span class="tag t-D">Dat</span></td><td>Wem?</td><td class="m chg">dem / einem</td><td class="f chg">der / einer</td><td class="n chg">dem / einem</td><td class="p chg">den / –n</td></tr>
+      <tr><td class="case"><span class="tag t-G">Gen</span></td><td>Wessen?</td><td class="m chg">des / eines (+s)</td><td class="f chg">der / einer</td><td class="n chg">des / eines (+s)</td><td class="p chg">der / –</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="tip"><b>Merksatz:</b> Im Akkusativ ändert sich nur das Maskulinum (der → den). Im Dativ Plural bekommt das Nomen ein <b>-n</b>: mit den Kinder<b>n</b>.</div>
+
+  <h3>Wann welcher Fall?</h3>
+  <div class="preps">
+    <div class="pbox"><h4><span class="tag t-N">Nominativ</span></h4><p>Das Subjekt: wer handelt?</p><small><b>Der Hund</b> bellt. Das ist <b>ein</b> Problem.</small></div>
+    <div class="pbox"><h4><span class="tag t-A">Akkusativ</span></h4><p>Direktes Objekt; nach haben, brauchen, kaufen, sehen …</p><small>Ich sehe <b>den</b> Mann.</small></div>
+    <div class="pbox"><h4><span class="tag t-D">Dativ</span></h4><p>Indirektes Objekt (Person); Verben wie helfen, danken, gefallen, gehören.</p><small>Ich helfe <b>dem</b> Mann.</small></div>
+    <div class="pbox"><h4><span class="tag t-G">Genitiv</span></h4><p>Besitz; nach wegen, trotz, während. Typisch für B2-Schreiben.</p><small>Das Auto <b>des</b> Lehrers.</small></div>
+  </div>
+
+  <h3>Präpositionen nach Fall</h3>
+  <div class="preps">
+    <div class="pbox"><h4><span class="tag t-A">immer Akkusativ</span></h4><p><b>durch, für, gegen, ohne, um, bis, entlang</b></p><small>Eselsbrücke: „DOGFU“ – durch, ohne, gegen, für, um</small></div>
+    <div class="pbox"><h4><span class="tag t-D">immer Dativ</span></h4><p><b>aus, bei, mit, nach, seit, von, zu, gegenüber, ab, außer, entgegen</b></p><small>Melodie: „aus-bei-mit-nach-seit-von-zu“</small></div>
+    <div class="pbox"><h4><span class="tag t-W">Wechsel: Akk oder Dat</span></h4><p><b>an, auf, hinter, in, neben, über, unter, vor, zwischen</b></p><small><b>Wohin?</b> (Bewegung) → Akk · <b>Wo?</b> (Position) → Dat</small></div>
+    <div class="pbox"><h4><span class="tag t-G">Genitiv</span></h4><p><b>wegen, trotz, während, (an)statt, innerhalb, außerhalb, aufgrund, bezüglich, hinsichtlich, mithilfe, oberhalb, unterhalb</b></p><small>Im Alltag oft Dativ, im Goethe-B2-Schreiben besser Genitiv.</small></div>
+  </div>
+
+  <h3>Genus-Tipps nach Endung</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>Artikel</th><th>Endungen</th><th>Beispiele</th></tr></thead>
+    <tbody>
+      <tr><td class="m">der</td><td>-ling, -ismus, -or, -ig, Tage, Monate, Jahreszeiten</td><td>Frühling, Tourismus, Motor, Montag</td></tr>
+      <tr><td class="f">die</td><td>-ung, -heit, -keit, -schaft, -ion, -tät, -ie, -ik, meist -e</td><td>Zeitung, Freiheit, Universität, Musik</td></tr>
+      <tr><td class="n">das</td><td>-chen, -lein, -ment, -um, -nis (oft), Ge-, Infinitive</td><td>Mädchen, Dokument, Museum, Essen</td></tr>
+    </tbody>
+  </table></div>
+  <div class="row"><a class="btn" href="#genus" style="text-decoration:none">Jetzt üben</a></div>
+</section>
+
+<!-- GENDER -->
+<section id="v-genus" hidden>
+  <h2>der, die oder das?</h2>
+  <p class="lead">Wähle den richtigen Artikel. Die Farbe hilft beim Merken.</p>
+  <div class="card">
+    <div class="meta"><span id="g-count"></span><span id="g-streak"></span></div>
+    <div class="q" id="g-q"></div>
+    <div class="opts" id="g-opts"></div>
+    <div class="fb" id="g-fb"></div>
+    <div class="row"><button class="btn" id="g-next">Weiter</button></div>
+  </div>
+</section>
+
+<!-- CASES -->
+<section id="v-faelle" hidden>
+  <h2>Fälle-Quiz</h2>
+  <p class="lead">Setze den richtigen Artikel ein. Danach siehst du den Grund.</p>
+  <div class="filters" id="c-filter"></div>
+  <div class="card">
+    <div class="meta"><span id="c-tag"></span><span id="c-streak"></span></div>
+    <div class="q" id="c-q"></div>
+    <div class="opts" id="c-opts"></div>
+    <div class="fb" id="c-fb"></div>
+    <div class="row"><button class="btn" id="c-next">Weiter</button></div>
+  </div>
+</section>
+
+<!-- PREPS -->
+<section id="v-praep" hidden>
+  <h2>Welcher Fall nach dieser Präposition?</h2>
+  <p class="lead">Wechselpräpositionen gehen mit Akkusativ <i>und</i> Dativ.</p>
+  <div class="card">
+    <div class="meta"><span>Präposition</span><span id="p-streak"></span></div>
+    <div class="q" id="p-q"></div>
+    <div class="opts" id="p-opts"></div>
+    <div class="fb" id="p-fb"></div>
+    <div class="row"><button class="btn" id="p-next">Weiter</button></div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section id="v-statistik" hidden>
+  <h2>Deine Statistik</h2>
+  <p class="lead">Wird nur in deinem Browser gespeichert. Jede Person, die den Link öffnet, hat ihre eigene Statistik.</p>
+  <div class="kpis">
+    <div class="kpi"><b id="k-total">0</b><span>Antworten</span></div>
+    <div class="kpi"><b id="k-acc">–</b><span>Trefferquote</span></div>
+    <div class="kpi"><b id="k-best">0</b><span>Beste Serie</span></div>
+  </div>
+  <h3>Trefferquote nach Bereich</h3>
+  <div class="bars" id="bars"></div>
+  <h3>Schwierigste Wörter</h3>
+  <p id="hard" class="lead"></p>
+  <div class="row"><button class="btn ghost" id="reset">Statistik zurücksetzen</button><span id="reset-msg" class="lead" style="margin:0"></span></div>
+</section>
+
+<footer>Tipp: Schick den Link an Freunde. Jede Person übt mit eigener Statistik.</footer>
+</div>
+
+<script>
+// ---------- DATA ----------
+const NOUNS=[
+["Tisch","der"],["Stuhl","der"],["Computer","der"],["Käse","der"],["Kaffee","der"],["Tee","der"],["Montag","der"],["Januar","der"],["Winter","der"],["Regen","der"],["Mond","der"],["Frühling","der","-ling → der"],["Tourismus","der","-ismus → der"],["Termin","der"],["Vertrag","der"],["Laden","der"],["Markt","der"],["Reis","der"],["Motor","der","-or → der"],["Honig","der","-ig → der"],["Schlüssel","der"],["Löffel","der"],["Bahnhof","der"],
+["Lampe","die","-e → meist die"],["Zeitung","die","-ung → die"],["Freiheit","die","-heit → die"],["Möglichkeit","die","-keit → die"],["Wohnung","die","-ung → die"],["Information","die","-ion → die"],["Universität","die","-tät → die"],["Freundschaft","die","-schaft → die"],["Katze","die"],["Uhr","die"],["Milch","die"],["Sonne","die"],["Erfahrung","die","-ung → die"],["Bewerbung","die","-ung → die"],["Rechnung","die","-ung → die"],["Firma","die"],["Musik","die","-ik → die"],["Gabel","die"],["Energie","die","-ie → die"],
+["Fenster","das"],["Mädchen","das","-chen → das"],["Dokument","das","-ment → das"],["Museum","das","-um → das"],["Auto","das"],["Kind","das"],["Buch","das"],["Handy","das"],["Brot","das"],["Wasser","das"],["Meer","das"],["Problem","das"],["Thema","das"],["Ergebnis","das","-nis → oft das"],["Zeugnis","das","-nis → oft das"],["Gehalt","das"],["Geschäft","das","Ge- → oft das"],["Gemüse","das","Ge- → oft das"],["Obst","das"],["Messer","das"],["Essen","das","Infinitiv als Nomen → das"],["Fräulein","das","-lein → das"],
+["Antrag","der"],["Beruf","der"],["Erfolg","der"],["Unterschied","der"],["Zweifel","der"],["Vorteil","der"],["Nachteil","der"],["Grund","der"],["Wunsch","der"],["Ausflug","der"],["Urlaub","der"],["Eindruck","der"],["Verkehr","der"],["Kunde","der"],["Mitarbeiter","der"],["Lehrling","der","-ling → der"],["Optimismus","der","-ismus → der"],["Professor","der","-or → der"],["Käfig","der","-ig → der"],["Kühlschrank","der"],["Arbeitsplatz","der","Kompositum: letztes Wort zählt (der Platz)"],["Sonntag","der","Wochentage → der"],["Herbst","der","Jahreszeiten → der"],
+["Umwelt","die"],["Gesellschaft","die","-schaft → die"],["Gesundheit","die","-heit → die"],["Gelegenheit","die","-heit → die"],["Verantwortung","die","-ung → die"],["Entscheidung","die","-ung → die"],["Meinung","die","-ung → die"],["Lösung","die","-ung → die"],["Situation","die","-ion → die"],["Diskussion","die","-ion → die"],["Qualität","die","-tät → die"],["Politik","die","-ik → die"],["Technologie","die","-ie → die"],["Ausbildung","die","-ung → die"],["Miete","die","-e → meist die"],["Reise","die","-e → meist die"],["Sprache","die","-e → meist die"],["Kultur","die","-ur → oft die"],["Prüfung","die","-ung → die"],["Hälfte","die","-e → meist die"],["Haltestelle","die","Kompositum: letztes Wort zählt (die Stelle)"],
+["Studium","das","-um → das"],["Zentrum","das","-um → das"],["Argument","das","-ment → das"],["Experiment","das","-ment → das"],["Verhältnis","das","-nis → oft das"],["Erlebnis","das","-nis → oft das"],["Gebäude","das","Ge- → oft das"],["Gespräch","das","Ge- → oft das"],["Gefühl","das","Ge- → oft das"],["Ziel","das"],["Angebot","das"],["Verhalten","das","Infinitiv als Nomen → das"],["Lernen","das","Infinitiv als Nomen → das"],["Bild","das"],["Land","das"],["Unternehmen","das","Infinitiv als Nomen → das"],["Kapitel","das"],["Krankenhaus","das","Kompositum: letztes Wort zählt (das Haus)"],["Wetter","das"],["Hotel","das"],["Restaurant","das"],["Häuschen","das","-chen → das"]
+];
+// c: N A D G ; t: def / indef
+const SENT=[
+["Ich helfe ___ Mann.","dem","D","def","helfen + Dativ"],
+["Wir warten auf ___ Bus.","den","A","def","warten auf + Akkusativ"],
+["Wegen ___ Regens bleiben wir zu Hause.","des","G","def","wegen + Genitiv (der Regen → des Regens)"],
+["Sie fährt mit ___ U-Bahn zur Arbeit.","der","D","def","mit + Dativ, die U-Bahn → der"],
+["Das Buch liegt auf ___ Tisch.","dem","D","def","Wo? → Wechselpräposition + Dativ"],
+["Ich lege das Buch auf ___ Tisch.","den","A","def","Wohin? → Wechselpräposition + Akkusativ"],
+["Ohne ___ Kind fahre ich nicht weg.","das","A","def","ohne + Akkusativ, neutral bleibt das"],
+["Trotz ___ Kälte gehen wir spazieren.","der","G","def","trotz + Genitiv, die Kälte → der"],
+["Er joggt durch ___ Park.","den","A","def","durch + Akkusativ"],
+["Seit ___ Sommer wohne ich in Düsseldorf.","dem","D","def","seit + Dativ"],
+["Das ist das Auto ___ Lehrerin.","der","G","def","Besitz → Genitiv, feminin → der"],
+["Ich gebe ___ Kindern Schokolade.","den","D","def","Dativ Plural → den + -n"],
+["Wir hängen das Bild an ___ Wand.","die","A","def","Wohin? → Akkusativ"],
+["Das Bild hängt an ___ Wand.","der","D","def","Wo? → Dativ, die → der"],
+["Ich danke ___ Freundin.","der","D","def","danken + Dativ"],
+["Während ___ Pause trinke ich Kaffee.","der","G","def","während + Genitiv"],
+["Ich kaufe ___ Fahrrad.","das","A","def","Akkusativobjekt, neutral bleibt das"],
+["___ Hund bellt laut.","Der","N","def","Subjekt → Nominativ"],
+["Er kommt aus ___ Schweiz.","der","D","def","aus + Dativ, die Schweiz → der"],
+["Am Abend gehen wir in ___ Kino.","das","A","def","Wohin? → Akkusativ"],
+["Die Katze schläft unter ___ Bett.","dem","D","def","Wo? → Dativ"],
+["Die Katze kriecht unter ___ Bett.","das","A","def","Wohin? → Akkusativ"],
+["Nach ___ Unterricht gehen wir essen.","dem","D","def","nach + Dativ"],
+["Die Farbe ___ Hauses ist blau.","des","G","def","Genitiv, neutral → des + -es"],
+["Ich sehe ___ Frau im Supermarkt.","die","A","def","Akkusativ feminin bleibt die"],
+["Wir sind gegen ___ Plan.","den","A","def","gegen + Akkusativ"],
+["Das Handy gehört ___ Studenten.","dem","D","def","gehören + Dativ (n-Deklination: Studenten)"],
+["Ich schenke meiner Mutter ___ Blumenstrauß.","einen","A","indef","Akkusativ maskulin → einen"],
+["Er wohnt bei ___ Freund.","einem","D","indef","bei + Dativ"],
+["Innerhalb ___ Woche muss ich antworten.","einer","G","indef","innerhalb + Genitiv"],
+["Das ist ___ gute Idee.","eine","N","indef","sein + Nominativ"],
+["Ich brauche ___ neue Wohnung.","eine","A","indef","Akkusativ feminin bleibt eine"],
+["Wir sprechen mit ___ Kollegin.","einer","D","indef","mit + Dativ, feminin → einer"],
+["Statt ___ Briefes schreibe ich eine E-Mail.","eines","G","indef","statt + Genitiv"],
+["Ich habe ___ Frage.","eine","A","indef","haben + Akkusativ"],
+["___ Mann steht vor der Tür.","Ein","N","indef","Subjekt → Nominativ"],
+["Ich gehe mit ___ Kind zum Arzt.","einem","D","indef","mit + Dativ"],
+["Aufgrund ___ Problems kommt der Zug später.","eines","G","indef","aufgrund + Genitiv"],
+["Ich interessiere mich für ___ Thema.","das","A","def","sich interessieren für + Akkusativ"],
+["Er nimmt an ___ Kurs teil.","dem","D","def","teilnehmen an + Dativ"],
+["Ich freue mich auf ___ Urlaub.","den","A","def","sich freuen auf (Zukunft) + Akkusativ"],
+["Sie ärgert sich über ___ Verspätung.","die","A","def","sich ärgern über + Akkusativ"],
+["Wir sprechen über ___ Problem.","das","A","def","sprechen über + Akkusativ"],
+["Ich träume von ___ Reise nach Island.","der","D","def","träumen von + Dativ"],
+["Er bittet ___ Chef um Hilfe.","den","A","def","jemanden bitten → Akkusativ"],
+["Die Wohnung gefällt ___ Familie.","der","D","def","gefallen + Dativ"],
+["Ich gratuliere ___ Kollegen zum Geburtstag.","dem","D","def","gratulieren + Dativ (n-Deklination: Kollegen)"],
+["Der Schlüssel steckt in ___ Tür.","der","D","def","Wo? → Dativ"],
+["Er stellt die Flasche in ___ Kühlschrank.","den","A","def","stellen (Wohin?) → Akkusativ"],
+["Die Flasche steht in ___ Kühlschrank.","dem","D","def","stehen (Wo?) → Dativ"],
+["Ich setze mich neben ___ Fenster.","das","A","def","sich setzen (Wohin?) → Akkusativ"],
+["Ich sitze neben ___ Fenster.","dem","D","def","sitzen (Wo?) → Dativ"],
+["Außer ___ Lehrer waren alle da.","dem","D","def","außer + Dativ"],
+["Ich bedanke mich bei ___ Team.","dem","D","def","bei + Dativ"],
+["Wir empfehlen ___ Gästen das Restaurant.","den","D","def","Dativ Plural → den Gästen"],
+["Die Meinung ___ Experten ist wichtig.","des","G","def","Genitiv, n-Deklination: des Experten"],
+["Am Ende ___ Jahres mache ich die Prüfung.","des","G","def","Genitiv: das Jahr → des Jahres"],
+["Die Vorteile ___ Studiums sind klar.","des","G","def","Genitiv neutral → des Studiums"],
+["Die Zahl ___ Touristen steigt.","der","G","def","Genitiv Plural → der"],
+["Innerhalb ___ Stadt gibt es viele Parks.","der","G","def","innerhalb + Genitiv"],
+["Während ___ Gesprächs klingelte das Telefon.","des","G","def","während + Genitiv"],
+["___ Lösung ist einfach.","Die","N","def","Subjekt → Nominativ"],
+["___ Kinder spielen im Garten.","Die","N","def","Subjekt Plural → Nominativ"],
+["Ich schreibe ___ Freund eine E-Mail.","einem","D","indef","Wem? (Person) → Dativ"],
+["Wir suchen ___ Mitarbeiter.","einen","A","indef","suchen + Akkusativ"],
+["Sie arbeitet in ___ Firma in Köln.","einer","D","indef","Wo? → Dativ"],
+["Das ist der Wunsch ___ Kindes.","eines","G","indef","Genitiv neutral → eines Kindes"],
+["Trotz ___ Erkältung geht er zur Arbeit.","einer","G","indef","trotz + Genitiv"],
+["___ Lehrerin hat mir geholfen.","Eine","N","indef","Subjekt → Nominativ"],
+["Er kauft ___ Haus am See.","ein","A","indef","Akkusativ neutral bleibt ein"],
+["Ich warte seit ___ Stunde.","einer","D","indef","seit + Dativ"],
+["Wir fahren ohne ___ Plan los.","einen","A","indef","ohne + Akkusativ"],
+["Mit ___ Abschluss findet man leichter Arbeit.","einem","D","indef","mit + Dativ"]
+];
+const PREPS=[["durch","A"],["für","A"],["gegen","A"],["ohne","A"],["um","A"],["bis","A"],["entlang","A"],
+["aus","D"],["bei","D"],["mit","D"],["nach","D"],["seit","D"],["von","D"],["zu","D"],["gegenüber","D"],["ab","D"],
+["an","W"],["auf","W"],["hinter","W"],["in","W"],["neben","W"],["über","W"],["unter","W"],["vor","W"],["zwischen","W"],
+["wegen","G"],["trotz","G"],["während","G"],["statt","G"],["innerhalb","G"],["außerhalb","G"],["aufgrund","G"],
+["außer","D"],["entgegen","D"],["anstatt","G"],["bezüglich","G"],["hinsichtlich","G"],["mithilfe","G"],["oberhalb","G"],["unterhalb","G"]];
+const CASE={N:"Nominativ",A:"Akkusativ",D:"Dativ",G:"Genitiv",W:"Wechsel (Akk/Dat)"};
+const CASEVAR={N:"--nom",A:"--akk",D:"--dat",G:"--gen",W:"--muted"};
+
+// ---------- STATE ----------
+const KEY="ddd-trainer-v1";
+let S={cat:{},miss:{},total:0,right:0,best:0};
+try{const r=localStorage.getItem(KEY);if(r)S=Object.assign(S,JSON.parse(r));}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
+let streak=0;
+function record(cat,ok,word){
+  const c=S.cat[cat]||(S.cat[cat]={r:0,t:0});c.t++;S.total++;
+  if(ok){c.r++;S.right++;streak++;S.best=Math.max(S.best,streak);}
+  else{streak=0;if(word)S.miss[word]=(S.miss[word]||0)+1;}
+  save();document.querySelectorAll("[id$=-streak]").forEach(e=>e.textContent=streak?"Serie: "+streak:"");
+}
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+const esc=s=>s.replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
+
+function makeButtons(box,list,correct,onDone,cls){
+  box.innerHTML="";
+  list.forEach(o=>{
+    const b=document.createElement("button");b.type="button";b.textContent=o;if(cls)b.className=cls(o);
+    b.onclick=()=>{
+      const ok=o.toLowerCase()===correct.toLowerCase();
+      box.querySelectorAll("button").forEach(x=>{x.disabled=true;if(x.textContent.toLowerCase()===correct.toLowerCase())x.classList.add("right");});
+      if(!ok)b.classList.add("wrong");
+      onDone(ok);
+    };
+    box.appendChild(b);
+  });
+}
+
+// ---------- GENDER ----------
+let gi=0;
+function gNext(){
+  const [w,a,hint]=pick(NOUNS);gi++;
+  document.getElementById("g-count").textContent="Wort "+gi;
+  document.getElementById("g-q").innerHTML='<span class="gap">?</span> '+esc(w);
+  const fb=document.getElementById("g-fb");fb.innerHTML="";
+  makeButtons(document.getElementById("g-opts"),["der","die","das"],a,ok=>{
+    record("Genus",ok,a+" "+w);
+    document.getElementById("g-q").innerHTML='<span class="g-'+a+'">'+a+'</span> '+esc(w);
+    fb.innerHTML=(ok?'<strong class="ok">Richtig!</strong> ':'<strong class="no">Leider falsch.</strong> Es heißt <b class="g-'+a+'">'+a+' '+esc(w)+'</b>. ')+(hint?" Regel: "+hint:"");
+  },o=>"g-"+o);
+}
+document.getElementById("g-next").onclick=gNext;
+
+// ---------- CASES ----------
+let cFilter="alle";
+const FILTERS=[["alle","Alle"],["N","Nominativ"],["A","Akkusativ"],["D","Dativ"],["G","Genitiv"]];
+const fbox=document.getElementById("c-filter");
+FILTERS.forEach(([k,l])=>{const b=document.createElement("button");b.type="button";b.textContent=l;b.dataset.k=k;b.setAttribute("aria-pressed",k===cFilter);b.onclick=()=>{cFilter=k;fbox.querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",x.dataset.k===k));cNext();};fbox.appendChild(b);});
+let lastC=-1;
+function cNext(){
+  const pool=SENT.map((s,i)=>i).filter(i=>cFilter==="alle"||SENT[i][2]===cFilter);
+  let i;do{i=pick(pool);}while(pool.length>1&&i===lastC);lastC=i;
+  const [q,a,c,t,why]=SENT[i];
+  const cap=/^___/.test(q);
+  let opts=t==="def"?["der","die","das","den","dem","des"]:["ein","eine","einen","einem","einer","eines"];
+  if(cap)opts=opts.map(o=>o[0].toUpperCase()+o.slice(1));
+  document.getElementById("c-tag").textContent=t==="def"?"bestimmter Artikel":"unbestimmter Artikel";
+  document.getElementById("c-q").innerHTML=esc(q).replace("___",'<span class="gap">&nbsp;</span>');
+  const fb=document.getElementById("c-fb");fb.innerHTML="";
+  makeButtons(document.getElementById("c-opts"),opts,a,ok=>{
+    record(CASE[c],ok,q.replace("___",a));
+    document.getElementById("c-q").innerHTML=esc(q).replace("___",'<span class="gap" style="border-color:var('+CASEVAR[c]+')">'+a+'</span>');
+    fb.innerHTML=(ok?'<strong class="ok">Richtig!</strong> ':'<strong class="no">Falsch.</strong> Richtig ist <b>'+a+'</b>. ')+'<span class="tag t-'+c+'">'+CASE[c]+'</span> '+esc(why);
+  });
+}
+document.getElementById("c-next").onclick=cNext;
+
+// ---------- PREPS ----------
+const PEX={W:"Wo bist du? – <i>in dem (im) Park</i> · Wohin gehst du? – <i>in den Park</i>"};
+function pNext(){
+  const [p,c]=pick(PREPS);
+  document.getElementById("p-q").textContent=p+" + ?";
+  const fb=document.getElementById("p-fb");fb.innerHTML="";
+  const labels={A:"Akkusativ",D:"Dativ",G:"Genitiv",W:"Wechsel"};
+  makeButtons(document.getElementById("p-opts"),["Akkusativ","Dativ","Genitiv","Wechsel"],labels[c],ok=>{
+    record("Präpositionen",ok,p);
+    fb.innerHTML=(ok?'<strong class="ok">Richtig!</strong> ':'<strong class="no">Falsch.</strong> ')+'<b>'+esc(p)+'</b> → <span class="tag t-'+c+'">'+CASE[c]+'</span> '+(PEX[c]||"");
+  });
+}
+document.getElementById("p-next").onclick=pNext;
+
+// ---------- STATS ----------
+function renderStats(){
+  document.getElementById("k-total").textContent=S.total;
+  document.getElementById("k-acc").textContent=S.total?Math.round(S.right/S.total*100)+" %":"–";
+  document.getElementById("k-best").textContent=S.best;
+  const rows=[["Genus","--der"],["Nominativ","--nom"],["Akkusativ","--akk"],["Dativ","--dat"],["Genitiv","--gen"],["Präpositionen","--pl"]];
+  document.getElementById("bars").innerHTML=rows.map(([k,v])=>{
+    const c=S.cat[k]||{r:0,t:0};const pct=c.t?Math.round(c.r/c.t*100):0;
+    return '<div class="bar"><span>'+k+'</span><div class="track"><div class="fill" style="width:'+pct+'%;background:var('+v+')"></div></div><span class="v">'+(c.t?pct+" % · "+c.r+"/"+c.t:"noch nichts")+'</span></div>';
+  }).join("");
+  const hard=Object.entries(S.miss).sort((a,b)=>b[1]-a[1]).slice(0,6);
+  document.getElementById("hard").innerHTML=hard.length?hard.map(([w,n])=>"<b>"+esc(w)+"</b> ("+n+"×)").join(" · "):"Noch keine Fehler. Fang mit einer Übung an.";
+}
+document.getElementById("reset").onclick=function(){
+  if(this.dataset.armed){S={cat:{},miss:{},total:0,right:0,best:0};save();renderStats();this.textContent="Statistik zurücksetzen";delete this.dataset.armed;document.getElementById("reset-msg").textContent="Zurückgesetzt.";}
+  else{this.dataset.armed=1;this.textContent="Wirklich löschen?";document.getElementById("reset-msg").textContent="";}
+};
+
+// ---------- ROUTING ----------
+const VIEWS=["lernen","genus","faelle","praep","statistik"];
+const started={};
+function route(){
+  let v=location.hash.slice(1);if(!VIEWS.includes(v))v="lernen";
+  VIEWS.forEach(x=>document.getElementById("v-"+x).hidden=x!==v);
+  document.querySelectorAll("#nav a").forEach(a=>{if(a.getAttribute("href")==="#"+v)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current");});
+  if(!started[v]){started[v]=1;({genus:gNext,faelle:cNext,praep:pNext}[v]||(()=>{}))();}
+  if(v==="statistik")renderStats();
+}
+addEventListener("hashchange",route);route();
+</script>
+</body></html>
